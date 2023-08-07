@@ -2,8 +2,10 @@ package com.paulorjuniorp.webservices.springboot.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class Product implements Serializable {
 
@@ -16,10 +18,19 @@ public class Product implements Serializable {
 	private Double price;
 	private String imgUrl;
 	
-	private List<Category> categories = new ArrayList<>();
+	private Set<Category> categories = new HashSet<>();
 	private List<Order> orders = new ArrayList<>();
 	
 	public Product() {
+	}
+	
+	public Product(Long id, String name, String description, Double price, String imgUrl) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.imgUrl = imgUrl;
 	}
 
 	public Long getId() {
@@ -62,7 +73,7 @@ public class Product implements Serializable {
 		this.imgUrl = imgUrl;
 	}
 
-	public List<Category> getCategories() {
+	public Set<Category> getCategories() {
 		return categories;
 	}
 
