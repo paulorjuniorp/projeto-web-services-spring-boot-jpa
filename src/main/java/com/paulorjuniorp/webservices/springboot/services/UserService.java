@@ -1,11 +1,14 @@
 package com.paulorjuniorp.webservices.springboot.services;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.paulorjuniorp.webservices.springboot.entities.User;
 import com.paulorjuniorp.webservices.springboot.repositories.UserRepository;
+import com.paulorjuniorp.webservices.springboot.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class UserService {
@@ -17,7 +20,8 @@ public class UserService {
 	}
 	
 	public User findById(Integer id) {
-		return userRepository.findById(id).orElse(null);
+		Optional<User> obj = userRepository.findById(id);
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	public User insert(User obj) {
