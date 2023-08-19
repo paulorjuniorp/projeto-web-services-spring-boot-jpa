@@ -13,6 +13,8 @@ import com.paulorjuniorp.webservices.springboot.repositories.UserRepository;
 import com.paulorjuniorp.webservices.springboot.services.exceptions.DatabaseException;
 import com.paulorjuniorp.webservices.springboot.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class UserService {
 	@Autowired
@@ -42,11 +44,15 @@ public class UserService {
 	}
 	
 	public User update(Integer id, User obj) {
-		User entity = userRepository.findById(id).orElse(null);
-		if(entity != null) {
-			updateData(entity, obj);
+		try {
+			User entity = userRepository.findById(id).orElse(null);
+			if(entity != null) {
+				updateData(entity, obj);
+			}
+			return userRepository.save(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
 		}
-		return userRepository.save(entity);
 	}
 
 	private void updateData(User entity, User obj) {
