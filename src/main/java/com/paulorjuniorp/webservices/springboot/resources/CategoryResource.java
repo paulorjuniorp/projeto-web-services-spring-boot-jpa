@@ -44,7 +44,7 @@ public class CategoryResource {
 		Category category = categoryService.insert(obj);
 		URI uri = ServletUriComponentsBuilder
 				.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(category.getId()).toUri();
+				.buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(category);
 	}
 	
